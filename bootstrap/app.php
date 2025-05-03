@@ -10,8 +10,11 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
+    //Daftarkan middleware yang telah dibuat ke dalam kernel 
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\Admin::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
