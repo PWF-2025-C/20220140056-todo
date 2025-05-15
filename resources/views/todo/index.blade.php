@@ -25,6 +25,7 @@
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">Title</th>
+                                <th scope="col" class="px-6 py-3">Category</th>
                                 <th scope="col" class="px-6 py-3 text-center">Status</th>
                                 <th scope="col" class="px-6 py-3 text-center">Action</th>
                             </tr>
@@ -38,6 +39,9 @@
                                             class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
                                             {{ $data->title }}
                                         </a>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $data->category->title ?? 'No Category' }}
                                     </td>
                                     <td class="px-6 py-4 text-center">
                                         @if (!$data->is_done)
@@ -88,7 +92,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="3" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
+                                    <td colspan="4" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
                                         No todos found
                                     </td>
                                 </tr>

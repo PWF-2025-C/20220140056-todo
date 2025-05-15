@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Todo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,8 @@ class TodoController extends Controller
 
     public function create()
     {
-        return view('todo.create');
+        $categories = Category::where('user_id', Auth::id())->orderBy('title', 'asc')->get();
+        return view('todo.create', compact('categories'));
     }
 
 
@@ -28,31 +30,25 @@ class TodoController extends Controller
     public function edit(Todo $todo)
     {
         if (auth()->user()->id == $todo->user_id) {
-            // dd($todo);
-            return view('todo.edit', compact('todo'));
+            $categories = Category::where('user_id', Auth::id())->orderBy('title', 'asc')->get();
+            return view('todo.edit', compact('todo', 'categories'));
         } else {
-            // abort(403);
-            // abort(403, 'Not authorized');
             return redirect()->route('todo.index')->with('danger', 'You are not authorized to edit this todo!');
         }
-
     }
 
     public function update(Request $request, Todo $todo)
     {
         $request->validate([
             'title' => 'required|max:255',
+            'category_id' => 'required|exists:categories,id',
         ]);
-
-        // Practical
-        // $todo->title = $request->title;
-        // $todo->save();
-
-        // Eloquent Way - Readable
+    
         $todo->update([
             'title' => ucfirst($request->title),
+            'category_id' => $request->category_id,
         ]);
-
+    
         return redirect()->route('todo.index')->with('success', 'Todo updated successfully!');
     }
 
@@ -60,12 +56,15 @@ class TodoController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
         ]);
-
-        $todo = Todo::create([
+    
+        Todo::create([
             'title' => ucfirst($request->title),
             'user_id' => Auth::id(),
+            'category_id' => $request->category_id,
         ]);
+    
         return redirect()->route('todo.index')->with('success', 'Todo Created Successfully');
     }
 
