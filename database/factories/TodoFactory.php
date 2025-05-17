@@ -18,7 +18,7 @@ class TodoFactory extends Factory
     {
         return [
             'user_id' => rand(1, 100),
-            'title' => ucwords(fake()-> sentence()),
+            'title' => ucwords(fake()->sentence()),
             'is_done' => rand(0, 1),
             'category_id' => rand(1, 100),
         ];

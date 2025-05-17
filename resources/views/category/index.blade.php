@@ -31,15 +31,17 @@
                         </thead>
                         <tbody>
                             @forelse ($categories as $category)
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700">
-                                    <td class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white group">
+                                <tr
+                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <td
+                                        class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white group">
                                         <a href="{{ route('category.edit', $category) }}"
                                             class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">
                                             {{ $category->title }}
                                         </a>
                                     </td>
                                     <td class="px-6 py-4 text-center">
-                                        {{ $category->todos->count() }}
+                                        {{ $category->todo->count() }}
                                     </td>
                                     <td class="px-6 py-4 text-center">
                                         <div class="flex justify-center space-x-3">

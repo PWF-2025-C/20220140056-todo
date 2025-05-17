@@ -10,12 +10,22 @@ class TodoController extends Controller
 {
     public function index()
     {
-        $todos = Todo::where('user_id', Auth::id())->orderBy('is_done', 'desc')->get();
-
+        $todos = Todo::with('category')
+            ->where('user_id', Auth::id())
+            ->orderBy('is_done', 'asc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+            
         $todosCompleted = Todo::where('user_id', auth()->user()->id)
             ->where('is_done', true)
             ->count();
 
+        /*$todos = Todo::where('user_id', Auth::id())->orderBy('is_done', 'desc')->get();
+
+        $todosCompleted = Todo::where('user_id', auth()->user()->id)
+            ->where('is_done', true)
+            ->count();
+        */
         return view('todo.index', compact('todos', 'todosCompleted'));
     }
 

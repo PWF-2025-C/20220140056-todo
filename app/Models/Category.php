@@ -15,7 +15,7 @@ class Category extends Model
     ];
 
     // Relasi ke model lain 
-    public function todos()
+    public function todo()
     {
         return $this->hasMany(Todo::class);
     }
